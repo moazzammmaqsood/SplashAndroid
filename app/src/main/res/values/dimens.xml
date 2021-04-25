@@ -1,0 +1,17 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="labeltext">16sp</dimen>
+    <dimen name="dashboardlabels">30sp</dimen>
+    <dimen name="buttonpad">30dp</dimen>
+    <dimen name="dashboardcardpadding">15dp</dimen>
+    <dimen name="menubutton">36dp</dimen>
+    <dimen name="margin_appname_tb">20sp</dimen>
+    <dimen name="nametag">26dp</dimen>
+    <dimen name="icons">26dp</dimen>
+    <dimen name="divider_margin">8dp</dimen>
+    <dimen name="clientlabeltext_size">16sp</dimen>
+    <dimen name="labelspacing">15dp</dimen>
+    <dimen name="toolbarlogo">36dp</dimen>
+</resources>
