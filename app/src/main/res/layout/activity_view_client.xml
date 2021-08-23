@@ -44,22 +44,32 @@
     </LinearLayout>
 
 
-
-    <LinearLayout
-        android:id="@+id/clientdetails"
-        android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/clientdetails"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/rcvpaymentbtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/namelayout"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -85,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/contactlayout"
             android:orientation="horizontal">
 
             <TextView
@@ -109,6 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/addresslayout"
             android:orientation="horizontal">
 
             <TextView
@@ -134,12 +146,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/bottledelayout"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/clientbottles_label"
+                android:layout_weight="1"
+                android:textSize="@dimen/clientlabeltext_size"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/clientbottlesdel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="45"
+                android:textSize="@dimen/clientlabeltext_size"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/bottleholdinglayout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/clientbottlesRec_label"
                 android:layout_weight="1"
                 android:textSize="@dimen/clientlabeltext_size"
                 android:textStyle="bold"/>
@@ -154,11 +193,11 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/ratelayout"
             android:orientation="horizontal">
 
             <TextView
@@ -183,6 +222,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/labelspacing"
             android:layout_height="wrap_content"
+            android:id="@+id/lastdeliverylayout"
             android:orientation="horizontal">
 
             <TextView
@@ -207,6 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/daysdellayout"
             android:orientation="horizontal">
 
             <TextView
@@ -226,109 +267,176 @@
                 android:textSize="@dimen/clientlabeltext_size"/>
 
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/rcvpaymentbtn"
-        app:layout_constraintTop_toBottomOf="@id/clientdetails"
-        app:layout_constraintBottom_toBottomOf="@id/otheroptions"
-        android:paddingLeft="@dimen/buttonpad"
-        android:paddingRight="@dimen/buttonpad"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:background="@drawable/button_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rcv_payment"
-            android:textColor="#ffff"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_chevron_right_white_24dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/otheroptions"
-        app:layout_constraintTop_toBottomOf="@id/rcvpaymentbtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/buttonpad"
-        android:paddingRight="@dimen/buttonpad"
-        android:paddingTop="15dp"
-        android:layout_margin="20dp"
-        android:paddingBottom="15dp"
-        android:layout_gravity="center"
-        android:background="@drawable/button_bg"
- >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delivery"
-            android:textColor="#ffff"
-
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_chevron_right_white_24dp"/>
-
-    </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/buttonpad"
-            android:paddingRight="@dimen/buttonpad"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/button_bg_red"
-            >
+            android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/paidlayout"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/disable"
-                android:textColor="#ffff"
+                android:text="@string/clientTotalPaid"
+                android:layout_weight="1"
+                android:textSize="@dimen/clientlabeltext_size"
+                android:textStyle="bold"/>
 
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/clientpaid"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_chevron_right_white_24dp"/>
+                android:layout_weight="2"
+                android:text="2 days"
+                android:textSize="@dimen/clientlabeltext_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/labelspacing"
+            android:id="@+id/totalballayout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/clientTotalBalance"
+                android:layout_weight="1"
+                android:textSize="@dimen/clientlabeltext_size"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/clientbalance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="2 days"
+                android:textSize="@dimen/clientlabeltext_size"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/buttonpad"
+        android:paddingRight="@dimen/buttonpad"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="@dimen/clientbutton"
+                android:layout_height="@dimen/clientbutton"
+                android:orientation="vertical"
+                android:id="@+id/deliverBtn"
+                android:background="@color/colorPrimaryLight"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/clientbuttonImg"
+                    android:layout_height="@dimen/clientbuttonImg"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_delivery_truck"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="@string/delivery"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/clientbutton"
+                android:layout_height="@dimen/clientbutton"
+                android:orientation="vertical"
+                android:id="@+id/orderBtn"
+                android:background="@color/colorPrimaryLight"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/clientbuttonImg"
+                    android:layout_height="@dimen/clientbuttonImg"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_choices"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:text="@string/orders"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/clientbutton"
+                android:layout_height="@dimen/clientbutton"
+                android:orientation="vertical"
+                android:id="@+id/crossBtn"
+                android:background="@color/colorPrimaryLight"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/clientbuttonImg"
+                    android:layout_height="@dimen/clientbuttonImg"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="@string/disable"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
 
         </LinearLayout>
 
 
+    </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

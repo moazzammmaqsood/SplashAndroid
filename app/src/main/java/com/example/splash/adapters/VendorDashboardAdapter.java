@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.splash.Api.modal.vendor.ClientDelivery;
 import com.example.splash.R;
 import com.example.splash.data.model.ClientUserModel;
 import com.example.splash.vendor.VenderDashboard;
@@ -20,9 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboardAdapter.ViewHolder> {
 
-    List<ClientUserModel> list;
+    List<ClientDelivery> list;
 
-    public VendorDashboardAdapter(List<ClientUserModel> list){
+    public VendorDashboardAdapter(List<ClientDelivery> list){
         this.list=list;
     }
 
@@ -49,7 +50,8 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
 
         holder.getClientName().setText(list.get(position).getName());
         holder.getHouseno().setText(list.get(position).getAddress());
-        holder.getBottles().setText(String.valueOf(list.get(position).getBottlesrequired()));
+        holder.getBottles().setText(String.valueOf(list.get(position).getBottles()));
+
 //        holder.getViewClient().setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

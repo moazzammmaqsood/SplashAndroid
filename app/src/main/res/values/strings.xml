@@ -17,7 +17,8 @@
     <string name="clientname_label">Client :</string>
     <string name="clientcontact_label">Contact :</string>
     <string name="clientaddress_label">Address :</string>
-    <string name="clientbottles_label">Total Bottles :</string>
+    <string name="clientbottles_label">Bottles Delivered:</string>
+    <string name="clientbottlesRec_label">Bottles Holding:</string>
     <string name="clientbottlerate_label">Rate :</string>
     <string name="clientlastdel_label">Last Delivery :</string>
     <string name="clientdaysdel_label">Days/Delivery:</string>
@@ -37,4 +38,10 @@
     <string name="paymentbottle_label">bottles</string>
     <string name="paymentrcv">payment</string>
     <string name="Earnings">Earnings</string>
+    <string name="clientTotalPaid">Paid</string>
+    <string name="clientTotalBalance">Total Balance</string>
+    <string name="orders">Orders</string>
+    <string name="bottlereclabel">Bottles Recieved</string>
+    <string name="Date">Date</string>
+    <string name="cancel">Cancel</string>
 </resources>

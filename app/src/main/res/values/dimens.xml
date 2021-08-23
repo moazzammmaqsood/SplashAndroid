@@ -11,7 +11,9 @@
     <dimen name="nametag">26dp</dimen>
     <dimen name="icons">26dp</dimen>
     <dimen name="divider_margin">8dp</dimen>
-    <dimen name="clientlabeltext_size">16sp</dimen>
+    <dimen name="clientlabeltext_size">15sp</dimen>
     <dimen name="labelspacing">15dp</dimen>
     <dimen name="toolbarlogo">36dp</dimen>
+    <dimen name="clientbutton">100</dimen>
+    <dimen name="clientbuttonImg">60</dimen>
 </resources>
