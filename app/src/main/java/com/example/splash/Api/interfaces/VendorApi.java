@@ -17,7 +17,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
+import retrofit2.http.Path;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -50,16 +50,16 @@ public interface VendorApi {
 
     @Headers("Content-Type:application/json")
     @GET( "/api/v1/private/vendor/getclient/{clientid}/{userid}"     )
-    Call<ClientDetails> v1getclientbyid(@Header ("Authorization")String token,@Field("clientid") int clientid, @Field("userid") int userid ) ;
+    Call<ClientDetails> v1getclientbyid(@Header ("Authorization")String token,@Path("clientid") int clientid, @Path("userid") int userid ) ;
 
 
     @Headers("Content-Type:application/json")
     @GET( "/api/v1/private/vendor/get_client_orders/{clientid}" )
-    Call<Orders> v1getClientOrders(@Header ("Authorization")String token,@Field("clientid") int clientid);
+    Call<List<Orders>> v1getClientOrders(@Header ("Authorization")String token,@Path("clientid") int clientid);
 
     @Headers("Content-Type:application/json")
     @GET( "/api/v1/private/vendor/delete_get_client_order/{orderid}" )
-    Call<SuccessResponse> v1deleteClientOrder(@Header ("Authorization")String token,@Field("orderid") int orderid);
+    Call<SuccessResponse> v1deleteClientOrder(@Header ("Authorization")String token,@Path("orderid") int orderid);
 
     @Headers("Content-Type:application/json")
     @POST( "/api/v1/private/vendor/edit_client")
@@ -67,7 +67,7 @@ public interface VendorApi {
 
     @Headers("Content-Type:application/json")
     @GET("/api/v1/private/vendor/get_vendor_summary_deliveries/{date}")
-    Call<List<SummaryDelivery>> v1getvendorsummary_deliveries(@Header ("Authorization")String token,@Field("date") String date);
+    Call<List<SummaryDelivery>> v1getvendorsummary_deliveries(@Header ("Authorization")String token,@Path("date") String date);
 
 
 

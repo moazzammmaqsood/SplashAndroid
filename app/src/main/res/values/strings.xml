@@ -44,4 +44,15 @@
     <string name="bottlereclabel">Bottles Recieved</string>
     <string name="Date">Date</string>
     <string name="cancel">Cancel</string>
+    <string name="switclLabel">New / Old Customer</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="oncall">On call ?</string>
+    <string name="bottlesrequired">Bottles Required</string>
+    <string name="lastbottledel_label">Last Bottle Delivered</string>
+    <string name="lastbottlerec_label">Last bottles received</string>
+    <string name="lastpayment_label">Last Payment Recieved</string>
+    <string name="deliveries">Deliveries</string>
+    <string name="enable">Enable</string>
+    <string name="editclient">Edit</string>
 </resources>

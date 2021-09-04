@@ -29,4 +29,68 @@ public class Orders {
     @SerializedName("status")
     private String status;
 
+
+    public int getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderid = orderid;
+    }
+
+    public int getClientid() {
+        return clientid;
+    }
+
+    public void setClientid(int clientid) {
+        this.clientid = clientid;
+    }
+
+    public int getVendorid() {
+        return vendorid;
+    }
+
+    public void setVendorid(int vendorid) {
+        this.vendorid = vendorid;
+    }
+
+    public int getBottlesdelivered() {
+        return bottlesdelivered;
+    }
+
+    public void setBottlesdelivered(int bottlesdelivered) {
+        this.bottlesdelivered = bottlesdelivered;
+    }
+
+    public int getBottlesrecieved() {
+        return bottlesrecieved;
+    }
+
+    public void setBottlesrecieved(int bottlesrecieved) {
+        this.bottlesrecieved = bottlesrecieved;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

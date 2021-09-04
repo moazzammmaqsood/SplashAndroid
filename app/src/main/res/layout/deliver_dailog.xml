@@ -44,6 +44,7 @@
 
 
         <EditText
+            android:id="@+id/deliverbottle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
            android:layout_weight="1"
@@ -67,6 +68,7 @@
 
 
         <EditText
+            android:id="@+id/recievebottle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,6 +91,7 @@
 
 
         <EditText
+            android:id="@+id/receivepayment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -111,6 +114,7 @@
 
 
         <EditText
+            android:id="@+id/deliverydate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -131,6 +135,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <TextView
+            android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
@@ -145,6 +150,7 @@
 
 
         <TextView
+            android:id="@+id/deliver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delivery"

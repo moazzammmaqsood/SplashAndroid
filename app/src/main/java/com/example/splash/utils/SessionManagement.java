@@ -2,11 +2,13 @@ package com.example.splash.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Display;
 
 import com.example.splash.Api.modal.SplashUser;
 import com.example.splash.Api.modal.vendor.UserClient;
+import com.example.splash.vendor.SigninActivity;
 import com.google.gson.Gson;
 
 public class SessionManagement {
@@ -62,6 +64,14 @@ public class SessionManagement {
        return user;
 
 
+    }
+
+    public void logoutUser(Activity activity){
+        sharedPreferences.edit().clear().commit();
+        Intent intent=new Intent(activity, SigninActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
 }

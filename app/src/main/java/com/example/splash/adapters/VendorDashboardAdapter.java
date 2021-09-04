@@ -1,5 +1,6 @@
 package com.example.splash.adapters;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboardAdapter.ViewHolder> {
 
     List<ClientDelivery> list;
+    Activity activity;
 
-    public VendorDashboardAdapter(List<ClientDelivery> list){
+    public VendorDashboardAdapter(List<ClientDelivery> list,Activity activity) {
+        this.activity=activity;
         this.list=list;
     }
 
@@ -33,31 +36,39 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_vendor_dashboard,parent,false);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(parent.getContext(), ViewClient.class);
-                parent.getContext().startActivity(i);
-            }
-        });
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(parent.getContext(), ViewClient.class);
+//                i.putExtra("userid",)
+//                parent.getContext().startActivity(i);
+//            }
+//        });
 
         ViewHolder viewHolder=new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder,  int position) {
 
         holder.getClientName().setText(list.get(position).getName());
         holder.getHouseno().setText(list.get(position).getAddress());
         holder.getBottles().setText(String.valueOf(list.get(position).getBottles()));
 
-//        holder.getViewClient().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        final int index=position;
+        holder.getViewClient().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(activity,ViewClient.class);
+                intent.putExtra("userid",list.get(index).getUserid());
+                intent.putExtra("clientid",list.get(index).getClientid());
+                activity.startActivity(intent);
+
+
+            }
+        });
     }
 
     @Override

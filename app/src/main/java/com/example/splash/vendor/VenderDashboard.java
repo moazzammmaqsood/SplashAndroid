@@ -6,6 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class VenderDashboard extends AppCompatActivity {
     RecyclerView  recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView.Adapter adapter;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class VenderDashboard extends AppCompatActivity {
         Deliverybutton = findViewById(R.id.deliverybtn);
         Requestedbutton = findViewById(R.id.requestedbtn);
         recyclerView =findViewById(R.id.dashboardrev);
-
+        activity=this;
         final VendorApi vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
 
         SplashUser user = SessionManagement.getSessionManagement(this).GetUser();
@@ -82,7 +84,7 @@ public class VenderDashboard extends AppCompatActivity {
                 switch(response.code())  {
                     case 200:
                         Log.e(TAG, "onResponse: "+response.message() );
-        adapter = new VendorDashboardAdapter(response.body());
+        adapter = new VendorDashboardAdapter(response.body(),activity);
         recyclerView.setAdapter(adapter);
                     default:
                         Log.e(TAG, "onResponse: "+response.code() + response.message() );
