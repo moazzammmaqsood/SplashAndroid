@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".vendor.SummaryActivity"
+            android:exported="true" />
+        <activity
             android:name=".vendor.ClientDeliveries"
             android:exported="true" />
         <activity

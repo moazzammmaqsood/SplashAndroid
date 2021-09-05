@@ -10,6 +10,7 @@ import com.example.splash.Api.modal.vendor.ClientRequest;
 import com.example.splash.Api.modal.vendor.ClientUpdateRequest;
 import com.example.splash.Api.modal.vendor.EditClientRequest;
 import com.example.splash.Api.modal.vendor.Orders;
+import com.example.splash.Api.modal.vendor.SummaryDaily;
 import com.example.splash.Api.modal.vendor.SummaryDelivery;
 import com.example.splash.Api.modal.vendor.UserClient;
 
@@ -69,6 +70,9 @@ public interface VendorApi {
     @GET("/api/v1/private/vendor/get_vendor_summary_deliveries/{date}")
     Call<List<SummaryDelivery>> v1getvendorsummary_deliveries(@Header ("Authorization")String token,@Path("date") String date);
 
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/get_vendor_summary/{date}")
+    Call<SummaryDaily> v1getvendordatewissummary(@Header ("Authorization")String token, @Path("date") String date);
 
 
 }

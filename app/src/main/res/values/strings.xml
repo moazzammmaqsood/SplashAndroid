@@ -55,4 +55,12 @@
     <string name="deliveries">Deliveries</string>
     <string name="enable">Enable</string>
     <string name="editclient">Edit</string>
+    <string name="allclient">All Clients</string>
+    <string name="summary">Summary</string>
+    <string name="summary_header">Summary</string>
+    <string name="selectdate">Select Date</string>
+    <string name="totalhouses">Total House</string>
+    <string name="totalrevenue">Revenues</string>
+    <string name="totalpaid">Total Paid</string>
+    <string name="oncallvd">On Call</string>
 </resources>

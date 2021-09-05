@@ -21,8 +21,10 @@ import com.example.splash.Api.modal.SplashUser;
 import com.example.splash.Api.modal.SuccessResponse;
 import com.example.splash.Api.modal.vendor.ClientDetails;
 import com.example.splash.Api.modal.vendor.ClientRequest;
+import com.example.splash.Api.modal.vendor.EditClientRequest;
 import com.example.splash.R;
 import com.example.splash.callbacks.ClientCallback;
+import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
 
@@ -57,8 +59,8 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
         setUi();
         clientCallback=this;
         Intent intent=getIntent();
-        int userid = intent.getIntExtra("userid",0);
-        int clientid = intent.getIntExtra("clientid",0);
+        final int userid = intent.getIntExtra("userid",0);
+        final int clientid = intent.getIntExtra("clientid",0);
 
         if(userid==0|| clientid==0){
             finish();
@@ -68,6 +70,7 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
         if(user==null){
             SessionManagement.getSessionManagement(this).logoutUser(this);
         }
+        final VendorApi vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
 
         final String token = Utils.getToken(user.getToken());
         vendorImpl= new VendorImpl();
@@ -109,14 +112,14 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
                     verifydata=false;
                     Log.e(TAG, "onClick: bottlestext is null" );
                 }
-                ClientRequest clientRequest=null;
+                EditClientRequest clientRequest=null;
 
 
                 if(verifydata){
 
                     showProgress();
-                    clientRequest=new ClientRequest(Fnametext,Cnotext,addresstext,null,Integer.parseInt(daysdeltext),Integer.parseInt(ratetext),Integer.parseInt(deposittext),Integer.parseInt(bottlestext),oncall);
-                    Call<SuccessResponse> addclient=vendorApi.v1addclient(token,clientRequest);
+                    clientRequest=new EditClientRequest(userid,clientid,Fnametext,Cnotext,addresstext,null,Integer.parseInt(daysdeltext),Integer.parseInt(ratetext),Integer.parseInt(deposittext),Integer.parseInt(bottlestext),oncall);
+                    Call<SuccessResponse> addclient=vendorApi.v1editclient(token,clientRequest);
                     addclient.enqueue(new Callback<SuccessResponse>() {
                         @Override
                         public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {

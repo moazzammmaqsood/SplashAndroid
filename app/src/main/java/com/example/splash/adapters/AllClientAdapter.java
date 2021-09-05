@@ -8,24 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.splash.Api.modal.vendor.ClientDelivery;
+import com.example.splash.Api.modal.vendor.UserClient;
 import com.example.splash.R;
-import com.example.splash.data.model.ClientUserModel;
-import com.example.splash.vendor.VenderDashboard;
 import com.example.splash.vendor.ViewClient;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
+public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.ViewHolder> {
 
-public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboardAdapter.ViewHolder> {
-
-    List<ClientDelivery> list;
+    List<UserClient> list;
     Activity activity;
 
-    public VendorDashboardAdapter(List<ClientDelivery> list,Activity activity) {
+    public AllClientAdapter(List<UserClient> list, Activity activity) {
         this.activity=activity;
         this.list=list;
     }
@@ -34,7 +32,7 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_vendor_dashboard,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_client,parent,false);
 
 //        view.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -80,8 +78,7 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     public static class ViewHolder extends  RecyclerView.ViewHolder{
 
 
-        private final TextView sno;
-        private final TextView clientName;
+        private final TextView clientName,sno;
         private final TextView houseno;
         private final TextView bottles;
 
@@ -90,7 +87,7 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            sno=itemView.findViewById(R.id.sno);
+            sno= itemView.findViewById(R.id.sno);
             clientName= itemView.findViewById(R.id.namecard);
             houseno=itemView.findViewById(R.id.housenocard);
             bottles=itemView.findViewById(R.id.noofbottles);
@@ -100,6 +97,7 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
         public TextView getSno() {
             return sno;
         }
+
         public TextView getClientName() {
             return clientName;
         }

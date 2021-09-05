@@ -27,6 +27,7 @@
             android:layout_weight="0.8"
             android:textColor="@color/colorBlack" />
 
+
         <TextView
             android:id="@+id/namecard"
             android:layout_width="0dp"
@@ -43,9 +44,9 @@
 
         <TextView
             android:id="@+id/noofbottles"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:visibility="gone"
             android:textColor="@color/colorBlack" />
 
 

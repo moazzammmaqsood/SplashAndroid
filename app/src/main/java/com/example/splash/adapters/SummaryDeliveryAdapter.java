@@ -6,26 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.splash.Api.modal.vendor.ClientDelivery;
+import com.example.splash.Api.modal.vendor.SummaryDelivery;
 import com.example.splash.R;
-import com.example.splash.data.model.ClientUserModel;
-import com.example.splash.vendor.VenderDashboard;
 import com.example.splash.vendor.ViewClient;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
+public class SummaryDeliveryAdapter extends RecyclerView.Adapter<SummaryDeliveryAdapter.ViewHolder> {
 
-public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboardAdapter.ViewHolder> {
-
-    List<ClientDelivery> list;
+    List<SummaryDelivery> list;
     Activity activity;
 
-    public VendorDashboardAdapter(List<ClientDelivery> list,Activity activity) {
+    public SummaryDeliveryAdapter(List<SummaryDelivery> list, Activity activity) {
         this.activity=activity;
         this.list=list;
     }
@@ -34,7 +33,7 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_vendor_dashboard,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_summary,parent,false);
 
 //        view.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -52,13 +51,12 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,  int position) {
 
-        holder.getSno().setText(String.valueOf(position+1));
         holder.getClientName().setText(list.get(position).getName());
-        holder.getHouseno().setText(list.get(position).getAddress());
-        holder.getBottles().setText(String.valueOf(list.get(position).getBottles()));
-
+        holder.getBottlesdel().setText(String.valueOf(list.get(position).getBottlesdelivered()));
+        holder.getBottlesrec().setText(String.valueOf(list.get(position).getBottlesrecieved()));
+        holder.getPayment().setText(String.valueOf(list.get(position).getPayment()));
         final int index=position;
-        holder.getViewClient().setOnClickListener(new View.OnClickListener() {
+        holder.getCardll().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -80,40 +78,41 @@ public class VendorDashboardAdapter extends RecyclerView.Adapter<VendorDashboard
     public static class ViewHolder extends  RecyclerView.ViewHolder{
 
 
-        private final TextView sno;
         private final TextView clientName;
-        private final TextView houseno;
-        private final TextView bottles;
+        private final TextView bottlesdel;
+        private final TextView bottlesrec;
 
-        private final ImageView viewClient;
+        private final TextView payment;
+        LinearLayout cardll;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            sno=itemView.findViewById(R.id.sno);
             clientName= itemView.findViewById(R.id.namecard);
-            houseno=itemView.findViewById(R.id.housenocard);
-            bottles=itemView.findViewById(R.id.noofbottles);
-            viewClient=itemView.findViewById(R.id.viewclient);
+            bottlesdel=itemView.findViewById(R.id.bottlesdel);
+            bottlesrec=itemView.findViewById(R.id.bottlesrec);
+            payment=itemView.findViewById(R.id.payment);
+            cardll=itemView.findViewById(R.id.cardll);
         }
 
-        public TextView getSno() {
-            return sno;
-        }
         public TextView getClientName() {
             return clientName;
         }
 
-        public TextView getHouseno() {
-            return houseno;
+        public TextView getBottlesdel() {
+            return bottlesdel;
         }
 
-        public TextView getBottles() {
-            return bottles;
+        public TextView getBottlesrec() {
+            return bottlesrec;
         }
 
-        public ImageView getViewClient() {
-            return viewClient;
+        public TextView getPayment() {
+            return payment;
+        }
+
+        public LinearLayout getCardll() {
+            return cardll;
         }
     }
 }

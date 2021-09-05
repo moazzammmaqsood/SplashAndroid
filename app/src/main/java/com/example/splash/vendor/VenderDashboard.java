@@ -28,10 +28,12 @@ import com.example.splash.data.model.ClientUserModel;
 import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.Constants;
 import com.example.splash.utils.SessionManagement;
+import com.example.splash.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,9 +45,10 @@ public class VenderDashboard extends AppCompatActivity {
     TextView date;
     TextView Deliverybutton;
     TextView Requestedbutton;
-    RecyclerView  recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    RecyclerView  recyclerView,recyclerViewoncall;
+    private RecyclerView.LayoutManager layoutManager,linearManageroncall;
     private static RecyclerView.Adapter adapter;
+    private static RecyclerView.Adapter adapteroncall;
     Activity activity;
 
     @Override
@@ -53,12 +56,14 @@ public class VenderDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vender_dashboard);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(myToolbar);
         vendorname =  findViewById(R.id.vendorname);
         date= findViewById(R.id.date);
         Deliverybutton = findViewById(R.id.deliverybtn);
-        Requestedbutton = findViewById(R.id.requestedbtn);
+        Requestedbutton = findViewById(R.id.oncallbtn);
         recyclerView =findViewById(R.id.dashboardrev);
+        recyclerViewoncall=findViewById(R.id.recyclerViewoncall);
         activity=this;
         final VendorApi vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
 
@@ -66,17 +71,32 @@ public class VenderDashboard extends AppCompatActivity {
 
         if(user==null){
             Log.e(TAG, "onCreate: user null" );
+            SessionManagement.getSessionManagement(this).logoutUser(this);
         }
 
+        Deliverybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showonDaily();
+            }
+        });
+
+        Requestedbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showOnCall();
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
-
+        recyclerViewoncall.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
+        linearManageroncall=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerViewoncall.setLayoutManager(linearManageroncall);
 
 
-
-        String token = Constants.AUTHORIZATIONPREFIX+user.getToken();
+        String token = Utils.getToken(user.getToken());
         Call<List<ClientDelivery>> vendor= vendorApi.v1getdeliveries(token);
         vendor.enqueue(new Callback<List<ClientDelivery>>() {
             @Override
@@ -84,8 +104,24 @@ public class VenderDashboard extends AppCompatActivity {
                 switch(response.code())  {
                     case 200:
                         Log.e(TAG, "onResponse: "+response.message() );
-        adapter = new VendorDashboardAdapter(response.body(),activity);
-        recyclerView.setAdapter(adapter);
+                        List<ClientDelivery> dailydelivery=new ArrayList<>();
+                        List<ClientDelivery> oncalldelivery= new ArrayList<>();
+
+                        List<ClientDelivery> list= response.body();
+                        for (ClientDelivery clientDelivery:
+                             list ) {
+                            if (clientDelivery.getOncall().equals("Y")){
+                                oncalldelivery.add(clientDelivery);
+                            }else{
+                                dailydelivery.add(clientDelivery);
+                            }
+                        }
+
+                        adapter = new VendorDashboardAdapter(dailydelivery,activity);
+                        adapteroncall=new VendorDashboardAdapter(oncalldelivery,activity);
+                        recyclerView.setAdapter(adapter);
+                        recyclerViewoncall.setAdapter(adapteroncall);
+
                     default:
                         Log.e(TAG, "onResponse: "+response.code() + response.message() );
 
@@ -97,6 +133,7 @@ public class VenderDashboard extends AppCompatActivity {
 
             }
         });
+
 
 
 
@@ -118,14 +155,33 @@ public class VenderDashboard extends AppCompatActivity {
             Intent i=new Intent(this,Payments.class);
             startActivity(i);
 
-        } else if(id == R.id.earnings) {
-            Intent i=new Intent(this,Payments.class);
+        } else if(id == R.id.allclients) {
+            Intent i=new Intent(this,ClientActivity.class);
             startActivity(i);
 
         } else if(id == R.id.addclient) {
             Intent i=new Intent(this,AddClient.class);
             startActivity(i);
         }
+        else if(id == R.id.summaary) {
+            Intent i=new Intent(this,SummaryActivity.class);
+            startActivity(i);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showOnCall(){
+        Deliverybutton.setTextColor(getResources().getColor(R.color.colorBlack));
+        Requestedbutton.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+        recyclerView.setVisibility(View.GONE);
+        recyclerViewoncall.setVisibility(View.VISIBLE);
+    }
+
+    private void showonDaily(){
+        Deliverybutton.setTextColor(getResources().getColor(R.color.colorPrimary));
+        Requestedbutton.setTextColor(getResources().getColor(R.color.colorBlack));
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerViewoncall.setVisibility(View.GONE);
     }
 }

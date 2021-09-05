@@ -6,11 +6,15 @@
         android:title="@string/payments" />
 
 
-    <item android:id="@+id/earnings"
-        android:title="@string/Earnings" />
+    <item android:id="@+id/allclients"
+        android:title="@string/allclient" />
 
     <item android:id="@+id/addclient"
         android:title="@string/addclient_header"
+        />
+
+    <item android:id="@+id/summaary"
+        android:title="@string/summary"
         />
 
 
