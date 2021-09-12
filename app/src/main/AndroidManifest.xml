@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".vendor.DisabledClients"
+            android:exported="true" />
+        <activity
             android:name=".vendor.SummaryActivity"
             android:exported="true" />
         <activity
@@ -26,7 +29,15 @@
         <activity android:name=".vendor.ViewPayment" />
         <activity android:name=".vendor.Payments" />
         <activity android:name=".vendor.AddClient" />
-        <activity android:name=".vendor.ViewClient" />
+        <activity android:name=".vendor.ViewClient">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity android:name=".vendor.ClientActivity" />
         <activity android:name=".vendor.VenderDashboard" />
         <activity android:name=".ui.login.client.Dashboard" />

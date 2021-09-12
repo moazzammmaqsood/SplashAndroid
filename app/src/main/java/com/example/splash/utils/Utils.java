@@ -27,4 +27,9 @@ public class Utils {
     }
 
 
+    public static String getDatetoStringformatted(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        String strDate = dateFormat.format(date);
+        return  strDate;
+    }
 }

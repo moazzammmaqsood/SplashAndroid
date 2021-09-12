@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.splash.Api.VendorImpl;
@@ -37,6 +39,8 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
     VendorImpl vendorImpl;
     SummaryDeliveryCallBack callBack;
     DatePickerDialog.OnDateSetListener datePicker;
+    ProgressBar progressbar;
+    ImageView back;
     private static RecyclerView.Adapter adapter;
     final Calendar myCalendar = Calendar.getInstance();
     @Override
@@ -46,7 +50,14 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
         setUi();
         callBack=this;
         vendorImpl =new VendorImpl();
-
+        progressbar =findViewById(R.id.progressbar);
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         SplashUser user= SessionManagement.getSessionManagement(this).GetUser();
         if(user==null){
             SessionManagement.getSessionManagement(this).logoutUser(this);
@@ -87,6 +98,7 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
                     Utils.Message("Please select Date",getApplicationContext());
                 }else {
 
+                    showProgress();
                     vendorImpl.FetchDatewiesSummary(callBack, token,Utils.getDatetoString(myCalendar.getTime()));
                     vendorImpl.FetchDatewiseSummaryDelivery(callBack, token,Utils.getDatetoString(myCalendar.getTime()));
 
@@ -120,6 +132,7 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
         paid.setText(String.valueOf(summary.getPayment()));
         bottlesdel.setText(String.valueOf(summary.getBottlesdelivered()));
         bottlesrec.setText(String.valueOf(summary.getBottlesrecieved()));
+        hideProgress();
     }
 
     @Override
@@ -127,11 +140,21 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
 
         adapter = new SummaryDeliveryAdapter(summaryDelivery,this);
         recyclerView.setAdapter(adapter);
+        hideProgress();
+
 
     }
 
     @Override
     public void Failed(int Code, String message) {
+        Utils.Message(message,this);
+        hideProgress();
+    }
+    public void showProgress(){
+        progressbar.setVisibility(View.VISIBLE);
 
+    }
+    public void hideProgress(){
+        progressbar.setVisibility(View.GONE);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.splash.vendor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +18,22 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.splash.Api.VendorImpl;
 import com.example.splash.Api.interfaces.VendorApi;
 import com.example.splash.Api.modal.SplashUser;
 import com.example.splash.Api.modal.SuccessResponse;
 import com.example.splash.Api.modal.vendor.BottleDelivered;
 import com.example.splash.Api.modal.vendor.ClientDetails;
 import com.example.splash.R;
+import com.example.splash.callbacks.ViewClientCallback;
 import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -34,32 +41,41 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewClient extends AppCompatActivity {
+public class ViewClient extends AppCompatActivity implements ViewClientCallback {
     DatePickerDialog.OnDateSetListener datePicker;
     final Calendar myCalendar = Calendar.getInstance();
-    LinearLayout deliverBtn,orderBtn,crossBtn;
+    LinearLayout deliverBtn,orderBtn,crossBtn,okBtn;
     TextView clientname,clientcontact,clientaddress,clientbottlesdel,clientbottles,clientbottlesrate,clientlastdel,clientdaysdel,clientpaid,clientbalance;
     Context context;
-    EditText date;
+    TextView date;
     int bottledel,bottlerec,bottlepay;
     String bottledate;
+    VendorImpl vendorImpl;
     String token;
     int clientid,userid;
+    ProgressBar progressbar;
+    ViewClientCallback callback;
     ImageView editclient,back;
+     VendorApi vendorApi;
+    Call<ClientDetails> call;
+    private String TAG="ViewClient";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_client);
         context=this;
+        callback=this;
         Intent intent=getIntent();
          clientid=  intent.getIntExtra("clientid",-1);
          userid= intent.getIntExtra("userid",-1);
-        final VendorApi vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
-
+       vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
+        progressbar=findViewById(R.id.progressbar);
         if(clientid==-1 && userid==-1){
             Utils.Message("Failed to load user",this);
         }
 
+        vendorImpl=new VendorImpl();
         initUi();
 
 
@@ -70,34 +86,31 @@ public class ViewClient extends AppCompatActivity {
             finish();
         }
 
+        if(user.getStatus().equals("E")){
+            showDisable();
+        }else{
+            showEnable();
+        }
         token=Utils.getToken(user.getToken());
 
 
-        Call<ClientDetails> call = vendorApi.v1getclientbyid(token,clientid,userid);
-        call.enqueue(new Callback<ClientDetails>() {
+
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ClientDetails> call, Response<ClientDetails> response) {
-
-                switch (response.code()){
-
-                    case 200:
-                        updateUi(response.body());
-                        break;
-
-                    default:
-                     Utils.Message(response.code()+response.message(),context);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ClientDetails> call, Throwable t) {
-                Utils.Message(t.getMessage(),context);
+            public void onClick(View view) {
+                showProgress();
+                vendorImpl.EnableUser(callback,token,clientid);
             }
         });
 
-
+        crossBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showProgress();
+                vendorImpl.DisableUser(callback,token,clientid);
+            }
+        });
 
       //        Call<SuccessResponse> v1deliverclient= vendorApi.v1deliverclient()
 
@@ -128,7 +141,8 @@ public class ViewClient extends AppCompatActivity {
                 final View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.deliver_dailog, viewGroup, false);
                 builder.setView(dialogView);
                 final EditText deliverbottle,recievedbottle,payment;
-                TextView deliver,cancle;
+                final TextView deliver,cancle;
+                final ProgressBar progressbardialog= dialogView.findViewById(R.id.progressbar);
                 deliverbottle=  dialogView.findViewById(R.id.deliverbottle);
                 recievedbottle= dialogView.findViewById(R.id.recievebottle);
                 payment=dialogView.findViewById(R.id.receivepayment);
@@ -177,19 +191,30 @@ public class ViewClient extends AppCompatActivity {
                         if(del && rec && pay){
                             BottleDelivered deliveredobj=new BottleDelivered(clientid,bottledel,bottlerec,bottlepay,date.getText().toString());
                             Call<SuccessResponse> call=vendorApi.v1deliverclient(token,deliveredobj);
+                            progressbardialog.setVisibility(View.VISIBLE);
+                            deliver.setClickable(false);
                             call.enqueue(new Callback<SuccessResponse>() {
                                 @Override
                                 public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
                                     switch (response.code()) {
                                         case 200:
                                             Utils.Message(response.body().getSuccessMessage(),context);
-                                        default: Utils.Message(response.code()+response.message(),context);
+                                            progressbardialog.setVisibility(View.GONE);
+                                            deliver.setClickable(true);
+                                            break;
+                                        default:
+                                            Utils.Message(response.code()+response.message(),context);
+                                            progressbardialog.setVisibility(View.GONE);
+                                            deliver.setClickable(true);
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<SuccessResponse> call, Throwable t) {
                                     Utils.Message(t.getMessage(),context);
+                                    progressbardialog.setVisibility(View.GONE);
+                                    deliver.setClickable(true);
+
                                 }
                             });
                         }
@@ -238,6 +263,7 @@ public class ViewClient extends AppCompatActivity {
         deliverBtn= findViewById(R.id.deliverBtn);
         orderBtn=findViewById(R.id.orderBtn);
         crossBtn=findViewById(R.id.crossBtn);
+        okBtn= findViewById(R.id.okBtn);
 
 
         editclient.setOnClickListener(new View.OnClickListener() {
@@ -257,12 +283,50 @@ public class ViewClient extends AppCompatActivity {
         });
 
     }
+    private void FetchClient(){
+        showProgress();
+        call = vendorApi.v1getclientbyid(token,clientid,userid);
+        call.enqueue(new Callback<ClientDetails>() {
+            @Override
+            public void onResponse(Call<ClientDetails> call, Response<ClientDetails> response) {
+
+                switch (response.code()){
+
+                    case 200:
+
+                        updateUi(response.body());
+                        hideProgress();
+                        break;
+
+                    default:
+                        Utils.Message(response.code()+response.message(),context);
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Utils.Message( jObjError.getString("message"),ViewClient.this);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+                        hideProgress();
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ClientDetails> call, Throwable t) {
+                Utils.Message(t.getMessage(),context);
+                hideProgress();
+            }
+        });
+
+    }
+
     private void updateUi(ClientDetails body) {
 
         clientname.setText(body.getName());
         clientcontact.setText(body.getContact());
         clientaddress.setText(body.getAddress());
-        clientbottlesdel.setText(String.valueOf(body.getBottles()));
+        clientbottlesdel.setText(String.valueOf(body.getTotalbottles()));
         clientbottles.setText(String.valueOf(body.getBottlesholding()));
         clientbottlesrate.setText(String.valueOf(body.getRate()));
         clientlastdel.setText(body.getLastdelivery());
@@ -270,5 +334,49 @@ public class ViewClient extends AppCompatActivity {
         clientpaid.setText(String.valueOf(body.getPaid()));
         clientbalance.setText(String.valueOf(body.getPaymentremaining()));
 
+    }
+    public void showProgress(){
+        progressbar.setVisibility(View.VISIBLE);
+
+    }
+    public void hideProgress(){
+        progressbar.setVisibility(View.GONE);
+    }
+
+
+    private void showEnable(){
+        okBtn.setVisibility(View.VISIBLE);
+        crossBtn.setVisibility(View.GONE);
+    }
+
+    private void showDisable(){
+        okBtn.setVisibility(View.GONE);
+        crossBtn.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void succesfullyDisabledUser() {
+        hideProgress();
+        Utils.Message("Succesfully Disabled User",this);
+        showEnable();
+    }
+
+    @Override
+    public void succesfullyEnabledUser() {
+        hideProgress();
+        Utils.Message("Succesfully Enabled User",this);
+        showDisable();
+    }
+
+    @Override
+    public void unsuccessful(int responsecode, String message) {
+        hideProgress();
+        Utils.Message(message+" "+responsecode,this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FetchClient();
     }
 }

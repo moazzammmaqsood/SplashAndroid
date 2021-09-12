@@ -1,16 +1,24 @@
 package com.example.splash.Api;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.splash.Api.interfaces.VendorApi;
+import com.example.splash.Api.modal.SuccessResponse;
 import com.example.splash.Api.modal.vendor.ClientDetails;
 import com.example.splash.Api.modal.vendor.SummaryDaily;
 import com.example.splash.Api.modal.vendor.SummaryDelivery;
 import com.example.splash.callbacks.ClientCallback;
 import com.example.splash.callbacks.OnItemClick;
 import com.example.splash.callbacks.SummaryDeliveryCallBack;
+import com.example.splash.callbacks.ViewClientCallback;
 import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
+import com.example.splash.vendor.ClientDeliveries;
+import com.example.splash.vendor.ViewClient;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -21,6 +29,8 @@ import retrofit2.Response;
 
 public  class VendorImpl {
 
+
+    private String TAG="VendorImpl";
 
     public void FetchClient(final OnItemClick clientCallback, String token, int clientid, int userid) {
         VendorApi vendorApi = ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
@@ -34,7 +44,14 @@ public  class VendorImpl {
                         break;
 
                     default:
-                        clientCallback.FailedClientFetched(response.code(), response.errorBody().toString());
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            clientCallback.FailedClientFetched(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+
+
                 }
             }
 
@@ -59,7 +76,12 @@ public  class VendorImpl {
                         break;
 
                     default:
-                        clientCallback.FailedClientFetched(response.code(), response.errorBody().toString());
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            clientCallback.FailedClientFetched(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
                 }
             }
 
@@ -84,8 +106,15 @@ public  class VendorImpl {
                         callBack.SuccessfullyFetchedSummary(response.body());
                         break;
 
-                    default:
-                        callBack.Failed(response.code(), response.errorBody().toString());
+
+                    default:   Log.e(TAG, "onResponse: "+response.code() + response.message() );
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            callBack.Failed(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+
                 }
             }
 
@@ -100,7 +129,7 @@ public  class VendorImpl {
 
     public void FetchDatewiseSummaryDelivery(final SummaryDeliveryCallBack callBack, String token, String date) {
         VendorApi vendorApi = ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
-        Call<List<SummaryDelivery>> clientcall = vendorApi.v1getvendorsummary_deliveries(token,date);
+        Call<List<SummaryDelivery>> clientcall = vendorApi.v1getvendorsummary_deliveries(token, date);
         clientcall.enqueue(new Callback<List<SummaryDelivery>>() {
             @Override
             public void onResponse(Call<List<SummaryDelivery>> call, Response<List<SummaryDelivery>> response) {
@@ -110,8 +139,12 @@ public  class VendorImpl {
                         break;
 
                     default:
-                        callBack.Failed(response.code(), response.errorBody().toString());
-                }
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            callBack.Failed(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }          }
             }
 
             @Override
@@ -121,8 +154,66 @@ public  class VendorImpl {
 
         });
 
+    }
+        public void DisableUser(final ViewClientCallback callBack, String token, int clientid) {
+            VendorApi vendorApi = ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
+            Call<SuccessResponse> clientcall = vendorApi.v1disableUser(token,clientid);
+            clientcall.enqueue(new Callback<SuccessResponse>() {
+                @Override
+                public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                    switch (response.code()) {
+                        case 200:
+                            callBack.succesfullyDisabledUser();
+                            break;
+
+                        default:
+                            try {
+                                JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                callBack.unsuccessful(response.code(), jObjError.getString("message"));
+                            } catch (Exception e) {
+                                Log.e(TAG, "onResponse:qq "+e.getMessage());
+                            }             }
+                }
+
+                @Override
+                public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                    callBack.unsuccessful(512, t.getMessage());
+                }
+
+            });
+
+
+
+
 
     }
+    public void EnableUser(final ViewClientCallback callBack, String token, int clientid) {
+        VendorApi vendorApi = ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
+        Call<SuccessResponse> clientcall = vendorApi.v1enableUser(token, clientid);
+        clientcall.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                switch (response.code()) {
+                    case 200:
+                        callBack.succesfullyEnabledUser();
+                        break;
 
+                    default:
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            callBack.unsuccessful(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+                      }
+            }
+
+            @Override
+            public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                callBack.unsuccessful(512, t.getMessage());
+            }
+
+        });
+    }
 
 }

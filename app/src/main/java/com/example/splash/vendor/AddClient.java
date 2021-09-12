@@ -3,12 +3,15 @@ package com.example.splash.vendor;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -24,6 +27,8 @@ import com.example.splash.R;
 import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -47,6 +52,7 @@ public class AddClient extends AppCompatActivity {
      RadioGroup radioGroup;
      String oncall="Y";
      DatePickerDialog.OnDateSetListener datePicker;
+     ImageView back;
      boolean old;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,11 +189,18 @@ public class AddClient extends AppCompatActivity {
                                case 200 :
                                    hideProgress();
                                    Toast.makeText(getApplicationContext(),response.body().getSuccessMessage(),Toast.LENGTH_LONG).show();
+                                   Intent intent =new Intent(AddClient.this,ClientActivity.class);
+                                   startActivity(intent);
+                                   finish();
                                    break;
                                default:
                                    hideProgress();
-                                   Toast.makeText(getApplicationContext(),"default "+response.code(),Toast.LENGTH_LONG).show();
-                                   break;
+                                   try {
+                                       JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                       Toast.makeText(AddClient.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                   } catch (Exception e) {
+                                       Log.e(TAG, "onResponse:qq "+e.getMessage());
+                                   }
 
                            }
                        }
@@ -236,6 +249,13 @@ public class AddClient extends AppCompatActivity {
         bottlerecll=findViewById(R.id.bottlerecll);
         radioGroup=findViewById(R.id.radiogrp);
         progressbar=findViewById(R.id.progressbar);
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         SetRadiobtn();
     }
     private void setNewUi(){

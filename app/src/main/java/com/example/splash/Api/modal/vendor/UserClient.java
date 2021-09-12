@@ -20,15 +20,19 @@ public class UserClient
     @SerializedName("bottles")
      int bottles;
 
+    @SerializedName("status")
+    String status;
+
     public UserClient() {
     }
 
-    public UserClient(int userid, int clientid, String name, String address, int bottles) {
+    public UserClient(int userid, int clientid, String name, String address, int bottles,String  status) {
         this.userid = userid;
         this.clientid = clientid;
         this.name = name;
         Address = address;
         this.bottles = bottles;
+        this.status=status;
     }
 
     public int getUserid() {
@@ -69,5 +73,25 @@ public class UserClient
 
     public void setBottles(int bottles) {
         this.bottles = bottles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserClient{" +
+                "userid=" + userid +
+                ", clientid=" + clientid +
+                ", name='" + name + '\'' +
+                ", Address='" + Address + '\'' +
+                ", bottles=" + bottles +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

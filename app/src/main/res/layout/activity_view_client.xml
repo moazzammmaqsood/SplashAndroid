@@ -7,6 +7,15 @@
     tools:context=".vendor.ViewClient">
 
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -30,6 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/client_header"
             android:textSize="@dimen/dashboardlabels"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:textColor="@color/colorBlack"
             android:layout_marginLeft="@dimen/margin_appname_tb"/>
@@ -465,7 +475,7 @@
                 android:layout_width="@dimen/clientbutton"
                 android:layout_height="@dimen/clientbutton"
                 android:orientation="vertical"
-                android:id="@+id/enableBtn"
+                android:id="@+id/okBtn"
                 android:visibility="gone"
                 android:background="@color/colorPrimaryLight"
                 android:padding="10dp">

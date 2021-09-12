@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,16 +18,20 @@ import com.example.splash.Api.modal.vendor.UserClient;
 import com.example.splash.R;
 import com.example.splash.vendor.ViewClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.ViewHolder> {
+public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.ViewHolder> implements Filterable {
 
+    List<UserClient> changeablelist;
     List<UserClient> list;
     Activity activity;
 
     public AllClientAdapter(List<UserClient> list, Activity activity) {
         this.activity=activity;
-        this.list=list;
+
+        changeablelist=list;
+        this.list=new ArrayList<>(list);
     }
 
 
@@ -51,9 +57,9 @@ public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder,  int position) {
 
         holder.getSno().setText(String.valueOf(position+1));
-        holder.getClientName().setText(list.get(position).getName());
-        holder.getHouseno().setText(list.get(position).getAddress());
-        holder.getBottles().setText(String.valueOf(list.get(position).getBottles()));
+        holder.getClientName().setText(changeablelist.get(position).getName());
+        holder.getHouseno().setText(changeablelist.get(position).getAddress());
+        holder.getBottles().setText(String.valueOf(changeablelist.get(position).getBottles()));
 
         final int index=position;
         holder.getViewClient().setOnClickListener(new View.OnClickListener() {
@@ -61,8 +67,8 @@ public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.View
             public void onClick(View v) {
 
                 Intent intent = new Intent(activity,ViewClient.class);
-                intent.putExtra("userid",list.get(index).getUserid());
-                intent.putExtra("clientid",list.get(index).getClientid());
+                intent.putExtra("userid",changeablelist.get(index).getUserid());
+                intent.putExtra("clientid",changeablelist.get(index).getClientid());
                 activity.startActivity(intent);
 
 
@@ -72,7 +78,7 @@ public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.View
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return changeablelist.size();
     }
 
     public static class ViewHolder extends  RecyclerView.ViewHolder{
@@ -114,4 +120,36 @@ public class AllClientAdapter extends RecyclerView.Adapter<AllClientAdapter.View
             return viewClient;
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<UserClient> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(list);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (UserClient item : list) {
+                    if (item.getName().toLowerCase().contains(filterPattern) || item.getAddress().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            changeablelist.clear();
+            changeablelist.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }

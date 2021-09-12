@@ -63,4 +63,9 @@
     <string name="totalrevenue">Revenues</string>
     <string name="totalpaid">Total Paid</string>
     <string name="oncallvd">On Call</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Name, Address</string>
+    <string name="update">Update</string>
+    <string name="disable_client_header">Disabled Clients</string>
+    <string name="logout">Logout</string>
 </resources>

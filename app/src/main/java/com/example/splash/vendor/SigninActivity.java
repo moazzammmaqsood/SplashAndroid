@@ -6,12 +6,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.splash.Api.interfaces.LoginApi;
@@ -25,6 +28,12 @@ import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +46,7 @@ public class SigninActivity extends AppCompatActivity {
     Button button;
     Context context;
     Activity activity;
+    ProgressBar progressbar;
     SessionManagement sessionManagement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +58,7 @@ public class SigninActivity extends AppCompatActivity {
         username= findViewById(R.id.username);
         password=findViewById(R.id.password);
         button =findViewById(R.id.login);
-
-
+        progressbar=findViewById(R.id.progressbar);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,27 +72,35 @@ public class SigninActivity extends AppCompatActivity {
                 }else if(passWord==null || passWord.isEmpty()){
                     Utils.Message("Please Enter Username",context);
                 }else{
-                    Utils.Message("Login pressed",context);
+                    showProgress();
                     Call<LoginResponse> login= loginApi.login(new LoginRequest(userName,passWord));
                     login.enqueue(new Callback<LoginResponse>() {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
+                            hideProgress();
 
-                            Log.e(TAG, "onResponse: " + response.code());
-                            Log.e(TAG, "onResponse: " + response.body());
-                            Log.e(TAG, "onResponse: " + response.message() );
-                            SplashUser user = new SplashUser(response.body());
-
-                            SessionManagement.getSessionManagement(activity).SetUser(user);
-                            Intent i=new Intent(activity,VenderDashboard.class);
-                            startActivity(i);
+                            switch (response.code()) {
+                                case 200:
+                                    SplashUser user = new SplashUser(response.body());
+                                    SessionManagement.getSessionManagement(activity).SetUser(user);
+                                    Intent i=new Intent(activity,VenderDashboard.class);
+                                    startActivity(i);
+                                    finish();
+                                    break;
+                                default:
+                                    try {
+                                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                        Toast.makeText(SigninActivity.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                    } catch (Exception e) {
+                                        Log.e(TAG, "onResponse:qq "+e.getMessage());
+                                    }
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<LoginResponse> call, Throwable t) {
-//                            Log.e(TAG, "onResponse: " + t.getCause().);
-
+                            hideProgress();
                             t.printStackTrace();
                             Utils.Message(t.getLocalizedMessage(),context);
                         }
@@ -100,5 +117,11 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+    public void showProgress(){
+        progressbar.setVisibility(View.VISIBLE);
 
+    }
+    public void hideProgress(){
+        progressbar.setVisibility(View.GONE);
+    }
 }

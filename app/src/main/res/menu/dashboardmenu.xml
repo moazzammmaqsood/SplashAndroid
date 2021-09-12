@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/payments"
-        android:title="@string/payments" />
-
-
     <item android:id="@+id/allclients"
         android:title="@string/allclient" />
 
     <item android:id="@+id/addclient"
         android:title="@string/addclient_header"
         />
+    <item android:id="@+id/disabledUser"
+        android:title="@string/disable_client_header"
+        />
 
     <item android:id="@+id/summaary"
         android:title="@string/summary"
         />
 
-
+    <item android:id="@+id/logout"
+        android:title="@string/logout" />
 </menu>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -28,6 +29,8 @@ import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -47,6 +50,7 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
     RadioGroup radioGroup;
     String oncall="Y";
     DatePickerDialog.OnDateSetListener datePicker;
+    ImageView back;
     boolean old;
     ClientCallback clientCallback;
     VendorImpl vendorImpl;
@@ -76,7 +80,13 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
         vendorImpl= new VendorImpl();
         showProgress();
         vendorImpl.FetchEditClient(clientCallback, Utils.getToken(user.getToken()),clientid,userid);
-
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
         rcvpaymentbtn.setOnClickListener(new View.OnClickListener() {
@@ -127,10 +137,17 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
                                 case 200 :
                                     hideProgress();
                                     Toast.makeText(getApplicationContext(),response.body().getSuccessMessage(),Toast.LENGTH_LONG).show();
+                                    finish();
                                     break;
                                 default:
                                     hideProgress();
-                                    Toast.makeText(getApplicationContext(),"default "+response.code(),Toast.LENGTH_LONG).show();
+                                    Log.e(TAG, "onResponse: "+response.code() + response.message() );
+                                    try {
+                                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                        Toast.makeText(EditClient.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                    } catch (Exception e) {
+                                        Log.e(TAG, "onResponse:qq "+e.getMessage());
+                                    }
                                     break;
 
                             }
@@ -210,4 +227,5 @@ public class EditClient extends AppCompatActivity implements ClientCallback {
         Utils.Message(message,this);
         hideProgress();
     }
+
 }

@@ -10,7 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,8 @@ import com.example.splash.utils.ApplicationInstance;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,7 +49,9 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
      OnItemClick onItemClick;
      Activity activity;
      String token;
+     ProgressBar progressbar;
      int userid , clientid;
+     ImageView back;
     private static RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
         Intent intent =getIntent();
         userid=intent.getIntExtra("userid",0);
         clientid=intent.getIntExtra("clientid",0);
+        progressbar=findViewById(R.id.progressbar);
         if(clientid==0 || userid==0){
             Log.e(TAG, "onCreate: clientid or userid is null");
             finish();
@@ -64,6 +72,13 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
             Log.e(TAG, "onCreate: user is null");
             finish();
         }
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         VendorImpl vendorImpl=new VendorImpl();
         token= Utils.getToken(user.getToken());
@@ -99,7 +114,12 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                         break;
                     default:
                         Log.e(TAG, "onResponse: "+response.code() + response.message() );
-
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Toast.makeText(ClientDeliveries.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
 
                 }
             }
@@ -131,14 +151,19 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                         break;
                     default:
                         Log.e(TAG, "onResponse: "+response.code() + response.message() );
-
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Toast.makeText(ClientDeliveries.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
 
                 }
             }
 
             @Override
             public void onFailure(Call<List<Orders>> call, Throwable t) {
-
+                Toast.makeText(ClientDeliveries.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -215,5 +240,12 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+    public void showProgress(){
+        progressbar.setVisibility(View.VISIBLE);
+
+    }
+    public void hideProgress(){
+        progressbar.setVisibility(View.GONE);
     }
 }

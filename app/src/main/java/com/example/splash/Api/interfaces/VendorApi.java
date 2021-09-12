@@ -74,5 +74,12 @@ public interface VendorApi {
     @GET("/api/v1/private/vendor/get_vendor_summary/{date}")
     Call<SummaryDaily> v1getvendordatewissummary(@Header ("Authorization")String token, @Path("date") String date);
 
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/disable_client/{clientid}")
+    Call<SuccessResponse> v1disableUser(@Header ("Authorization")String token, @Path("clientid") int clientid);
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/enable_client/{clientid}")
+    Call<SuccessResponse> v1enableUser(@Header ("Authorization")String token, @Path("clientid") int clientid);
 
 }

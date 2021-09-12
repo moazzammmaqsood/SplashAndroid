@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +33,10 @@ import com.example.splash.utils.Constants;
 import com.example.splash.utils.SessionManagement;
 import com.example.splash.utils.Utils;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.internal.Util;
@@ -50,7 +56,8 @@ public class VenderDashboard extends AppCompatActivity {
     private static RecyclerView.Adapter adapter;
     private static RecyclerView.Adapter adapteroncall;
     Activity activity;
-
+    ProgressBar progressbar;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,7 @@ public class VenderDashboard extends AppCompatActivity {
         Requestedbutton = findViewById(R.id.oncallbtn);
         recyclerView =findViewById(R.id.dashboardrev);
         recyclerViewoncall=findViewById(R.id.recyclerViewoncall);
+        progressbar=findViewById(R.id.progressbar);
         activity=this;
         final VendorApi vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
 
@@ -74,6 +82,8 @@ public class VenderDashboard extends AppCompatActivity {
             SessionManagement.getSessionManagement(this).logoutUser(this);
         }
 
+        vendorname.setText(user.getVendorname());
+        date.setText(Utils.getDatetoStringformatted(new Date()));
         Deliverybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +108,7 @@ public class VenderDashboard extends AppCompatActivity {
 
         String token = Utils.getToken(user.getToken());
         Call<List<ClientDelivery>> vendor= vendorApi.v1getdeliveries(token);
+        showProgress();
         vendor.enqueue(new Callback<List<ClientDelivery>>() {
             @Override
             public void onResponse(Call<List<ClientDelivery>> call, Response<List<ClientDelivery>> response) {
@@ -121,8 +132,19 @@ public class VenderDashboard extends AppCompatActivity {
                         adapteroncall=new VendorDashboardAdapter(oncalldelivery,activity);
                         recyclerView.setAdapter(adapter);
                         recyclerViewoncall.setAdapter(adapteroncall);
-
+                        hideProgress();
+                        break;
+                    case 401 :
+                        Utils.Message(response.message(),activity);
+                        SessionManagement.getSessionManagement(activity).logoutUser(activity);
                     default:
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Utils.Message(jObjError.getString("message"),VenderDashboard.this);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+                        hideProgress();
                         Log.e(TAG, "onResponse: "+response.code() + response.message() );
 
                 }
@@ -130,7 +152,7 @@ public class VenderDashboard extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ClientDelivery>> call, Throwable t) {
-
+                Utils.Message(t.getMessage(),getApplicationContext());
             }
         });
 
@@ -151,9 +173,9 @@ public class VenderDashboard extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.payments) {
-            Intent i=new Intent(this,Payments.class);
-            startActivity(i);
+        if(id == R.id.logout) {
+            SessionManagement.getSessionManagement(activity).logoutUser(activity);
+
 
         } else if(id == R.id.allclients) {
             Intent i=new Intent(this,ClientActivity.class);
@@ -165,6 +187,10 @@ public class VenderDashboard extends AppCompatActivity {
         }
         else if(id == R.id.summaary) {
             Intent i=new Intent(this,SummaryActivity.class);
+            startActivity(i);
+        }
+        else if(id== R.id.disabledUser){
+            Intent i=new Intent(this,DisabledClients.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -183,5 +209,12 @@ public class VenderDashboard extends AppCompatActivity {
         Requestedbutton.setTextColor(getResources().getColor(R.color.colorBlack));
         recyclerView.setVisibility(View.VISIBLE);
         recyclerViewoncall.setVisibility(View.GONE);
+    }
+    public void showProgress(){
+        progressbar.setVisibility(View.VISIBLE);
+
+    }
+    public void hideProgress(){
+        progressbar.setVisibility(View.GONE);
     }
 }
