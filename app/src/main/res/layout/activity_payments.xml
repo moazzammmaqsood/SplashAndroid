@@ -45,8 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@+id/carddeliver"
-        >
+          >
 
 
 
@@ -96,11 +95,6 @@
             android:textAlignment="center"
             android:textSize="@dimen/nametag"/>
 
-        <view
-            android:layout_width="3.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:layout_marginLeft="@dimen/divider_margin"/>
 
 
         <TextView

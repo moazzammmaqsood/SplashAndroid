@@ -222,7 +222,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="75dp"
+            android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
@@ -248,6 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
+                android:checked="true"
                 android:layout_weight="1"
                />
         </RadioGroup>

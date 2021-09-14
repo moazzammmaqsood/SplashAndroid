@@ -47,7 +47,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     LinearLayout deliverBtn,orderBtn,crossBtn,okBtn;
     TextView clientname,clientcontact,clientaddress,clientbottlesdel,clientbottles,clientbottlesrate,clientlastdel,clientdaysdel,clientpaid,clientbalance;
     Context context;
-    TextView date;
+    TextView date,nametag;
     int bottledel,bottlerec,bottlepay;
     String bottledate;
     VendorImpl vendorImpl;
@@ -57,8 +57,10 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     ViewClientCallback callback;
     ImageView editclient,back;
      VendorApi vendorApi;
+     String clientnameDialog;
     Call<ClientDetails> call;
     private String TAG="ViewClient";
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
 
 
 
-        SplashUser user = SessionManagement.getSessionManagement(this).GetUser();
+        final SplashUser user = SessionManagement.getSessionManagement(this).GetUser();
         if(user==null){
             finish();
         }
@@ -145,6 +147,10 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
                 final ProgressBar progressbardialog= dialogView.findViewById(R.id.progressbar);
                 deliverbottle=  dialogView.findViewById(R.id.deliverbottle);
                 recievedbottle= dialogView.findViewById(R.id.recievebottle);
+                nametag= dialogView.findViewById(R.id.nametag);
+                if (clientnameDialog!=null){
+                    nametag.setText(clientnameDialog);
+                }
                 payment=dialogView.findViewById(R.id.receivepayment);
                 date= dialogView.findViewById(R.id.deliverydate);
                 deliver= dialogView.findViewById(R.id.deliver);
@@ -201,6 +207,10 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
                                             Utils.Message(response.body().getSuccessMessage(),context);
                                             progressbardialog.setVisibility(View.GONE);
                                             deliver.setClickable(true);
+                                            FetchClient();
+                                            closeDialogbox();
+
+
                                             break;
                                         default:
                                             Utils.Message(response.code()+response.message(),context);
@@ -223,7 +233,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
 
 
 
-                final AlertDialog alertDialog = builder.create();
+                alertDialog = builder.create();
                 cancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -246,6 +256,10 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
             }
         });
     }
+    private void closeDialogbox(){
+        if (alertDialog!=null)
+        alertDialog.dismiss();
+    }
 
     private void  initUi(){
         clientname =  findViewById(R.id.clientname);
@@ -264,6 +278,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
         orderBtn=findViewById(R.id.orderBtn);
         crossBtn=findViewById(R.id.crossBtn);
         okBtn= findViewById(R.id.okBtn);
+
 
 
         editclient.setOnClickListener(new View.OnClickListener() {
@@ -333,7 +348,11 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
         clientdaysdel.setText(String.valueOf(body.getDaysperdelivery()));
         clientpaid.setText(String.valueOf(body.getPaid()));
         clientbalance.setText(String.valueOf(body.getPaymentremaining()));
+        if(nametag!=null){
+            nametag.setText(body.getName());
 
+        }
+        clientnameDialog =body.getName();
     }
     public void showProgress(){
         progressbar.setVisibility(View.VISIBLE);

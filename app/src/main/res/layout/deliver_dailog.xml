@@ -16,7 +16,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textSize="29dp"
-            android:text="Moazzam"/>
+            android:text=""
+            android:id="@+id/nametag"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
