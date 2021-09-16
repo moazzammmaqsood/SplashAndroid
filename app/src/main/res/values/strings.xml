@@ -9,7 +9,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="signupinfo">Contact Splash or your vendor for account</string>
+    <string name="signupinfo">For details Contact Us here</string>
+    <string name="termsandcondition">Privacy Policy</string>
     <string name="bottledeliveredlabel">Bottle Delivered</string>
     <string name="delivery">Delivery</string>
     <string name="requested">Requested</string>
@@ -68,4 +69,14 @@
     <string name="update">Update</string>
     <string name="disable_client_header">Disabled Clients</string>
     <string name="logout">Logout</string>
+    <string name="contactustext">Splash is one of its kind app and very easy to use to keep record of all your water supply.
+        Feature include :-\n
+        - Customer Management\n
+        - Delivery Management\n
+        - Sms on Deliveries\n
+        - Daily Summary\n
+        - Daily Deliveries\n
+        - Payments Management\n
+       \n500/rs is the registration fees , account opening and 2 months free for new accounts. after two months 40/rs per user will be charged for any queries you can call on 03248262087
+    </string>
 </resources>

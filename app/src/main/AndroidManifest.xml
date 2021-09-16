@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".vendor.Contactus"
+            android:exported="true" />
+        <activity
             android:name=".vendor.DisabledClients"
             android:exported="true" />
         <activity

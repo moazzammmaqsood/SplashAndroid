@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.splash.Api.interfaces.LoginApi;
@@ -46,6 +47,7 @@ public class SigninActivity extends AppCompatActivity {
     Button button;
     Context context;
     Activity activity;
+    TextView terms;
     ProgressBar progressbar;
     SessionManagement sessionManagement;
     @Override
@@ -59,7 +61,15 @@ public class SigninActivity extends AppCompatActivity {
         password=findViewById(R.id.password);
         button =findViewById(R.id.login);
         progressbar=findViewById(R.id.progressbar);
+        terms=findViewById(R.id.terms);
 
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(activity,Contactus.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
