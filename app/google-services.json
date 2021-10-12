@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:307981325684:android:98ec0bedac65780d7e4821",
+        "mobilesdk_app_id": "1:307981325684:android:5685a30fccf639557e4821",
         "android_client_info": {
-          "package_name": "com.example.splash"
+          "package_name": "com.nouveau.splash"
         }
       },
       "oauth_client": [

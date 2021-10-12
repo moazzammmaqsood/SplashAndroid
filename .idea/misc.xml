@@ -9,24 +9,27 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/button_bg_sqr.xml" value="0.11197916666666667" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_baseline_history_24.xml" value="0.11770833333333333" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.20677083333333332" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_check.xml" value="0.19583333333333333" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_choices.xml" value="0.19583333333333333" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_close.xml" value="0.19583333333333333" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/drawable/ic_delivery_truck.xml" value="0.19583333333333333" />
-        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_add_client.xml" value="0.4466666666666667" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_add_client.xml" value="0.18170103092783504" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_client.xml" value="0.1" />
-        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_client_deliveries.xml" value="0.4466666666666667" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_client_deliveries.xml" value="0.12" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_contactus.xml" value="0.14666666666666667" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_dashboard.xml" value="0.12364130434782608" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_disabled_clients.xml" value="0.11231884057971014" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_edit_client.xml" value="0.22" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_finance.xml" value="0.16666666666666666" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_history.xml" value="0.12" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_payments.xml" value="0.12364130434782608" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_signin.xml" value="0.4466666666666667" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_summary.xml" value="0.22" />
-        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_vender_dashboard.xml" value="0.14666666666666667" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_vender_dashboard.xml" value="0.1" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_view_client.xml" value="0.22" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/activity_view_payment.xml" value="0.1" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/card_client.xml" value="0.1" />
@@ -35,6 +38,7 @@
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/card_summary.xml" value="0.13405797101449277" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/card_vendor_dashboard.xml" value="0.3333333333333333" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/deliver_dailog.xml" value="0.22" />
+        <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/finance_dialog.xml" value="0.22" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/layout/toolbar.xml" value="0.1" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/menu/dashboardmenu.xml" value="0.22" />
         <entry key="..\:/ImportantFIles/OtherProject/SplashAndroid/app/src/main/res/menu/menu_main.xml" value="0.1" />

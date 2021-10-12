@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vendor.ClientDeliveries">
+    tools:context=".vendor.History">
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -36,22 +36,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/deliveries"
+            android:text="@string/olddeliveries"
             android:layout_gravity="center"
-            android:layout_weight="3"
             android:textSize="@dimen/dashboardlabels"
             android:textColor="@color/colorBlack"
-            android:layout_marginLeft="@dimen/margin_appname_tb"
-            />
-
-        <ImageView
-            android:id="@+id/history"
-            android:layout_weight="0.5"
-            android:layout_width="@dimen/menubutton"
-            android:layout_height="@dimen/menubutton"
-            android:src="@drawable/ic_baseline_history_24"
-            android:layout_gravity="center"
-            />
+            android:layout_marginLeft="@dimen/margin_appname_tb"/>
 
     </LinearLayout>
 
@@ -63,7 +52,7 @@
         android:layout_margin="10dp"
         android:id="@+id/detailll"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-       >
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Paid: "/>
+            android:text="Bal: "/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
