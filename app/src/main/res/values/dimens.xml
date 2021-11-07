@@ -18,4 +18,5 @@
     <dimen name="clientbuttonImg">60dp</dimen>
     <dimen name="delivery_card_text_size">14dp</dimen>
     <dimen name="labelpad">8dp</dimen>
+    <dimen name="dbbuttonImg">120dp</dimen>
 </resources>

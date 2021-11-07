@@ -10,6 +10,7 @@ import com.nouveau.splash.Api.modal.vendor.EditClientRequest;
 import com.nouveau.splash.Api.modal.vendor.Orders;
 import com.nouveau.splash.Api.modal.vendor.SummaryDaily;
 import com.nouveau.splash.Api.modal.vendor.SummaryDelivery;
+import com.nouveau.splash.Api.modal.vendor.SummaryMonthly;
 import com.nouveau.splash.Api.modal.vendor.UserClient;
 
 import java.util.List;
@@ -79,5 +80,9 @@ public interface VendorApi {
     @Headers("Content-Type:application/json")
     @GET("/api/v1/private/vendor/enable_client/{clientid}")
     Call<SuccessResponse> v1enableUser(@Header ("Authorization")String token, @Path("clientid") int clientid);
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/get_vendor_summary_monthly/{date}")
+    Call<SummaryMonthly> v1FetchMonthlySummary(@Header ("Authorization")String token, @Path("date") String date);
 
 }

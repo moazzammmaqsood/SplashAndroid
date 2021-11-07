@@ -75,4 +75,7 @@
     <string name="remarks">Remarks</string>
     <string name="save">Save</string>
     <string name="finance">Finance</string>
+    <string name="activeClients">Active Clients</string>
+    <string name="Comingsoon">Coming Soon</string>
+    <string name="summarymonth">Summary for the month of :</string>
 </resources>

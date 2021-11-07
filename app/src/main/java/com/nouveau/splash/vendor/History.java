@@ -104,21 +104,31 @@ public class History extends AppCompatActivity implements OnItemClick {
             public void onResponse(Call<List<Orders>> call, Response<List<Orders>> response) {
                 switch (response.code()){
                     case 200:
-                        adapter = new ClientDeliveriesAdapter(response.body(),activity,onItemClick);
-                        recyclerView.setAdapter(adapter);
-                        bottles=0;
+                                     bottles=0;
                         payment=0;
                         balance =0;
+                        List<Orders> finalList= new ArrayList<>();
+                        Date date= Calendar.getInstance().getTime();
+                        Integer rate=0;
                         for (Orders orders:
                                 response.body()) {
-                            bottles=bottles+orders.getBottlesdelivered();
                             payment=payment+orders.getPayment();
-                            Integer rate= orders.getRate();
-                            if(rate==null){
-                                rate=clientDetails.getRate();
-                            }
-                            balance = balance +(orders.getBottlesdelivered()*rate);
+
+                            if(orders.getDate().getMonth()!=date.getMonth()){
+                                    finalList.add(orders);
+                                    bottles=bottles+orders.getBottlesdelivered();
+                                    rate= orders.getRate();
+                                    if(rate==null){
+                                        rate=clientDetails.getRate();
+                                    }
+                                    balance = balance +(orders.getBottlesdelivered()*rate);
+                                    }
                         }
+                        balance=balance-payment;
+                        adapter = new ClientDeliveriesAdapter(finalList,activity,onItemClick);
+                        recyclerView.setAdapter(adapter);
+
+
                         setData();
                         break;
                     default:
@@ -188,7 +198,11 @@ public class History extends AppCompatActivity implements OnItemClick {
 
     private void setData() {
         clientbottle.setText(String.valueOf(bottles));
-        clientpayment.setText(String.valueOf(balance-payment));
+        if(balance<0){
+            String.valueOf(0);
+        }else {
+            clientpayment.setText(String.valueOf(balance));
+        }
     }
 
     public void setUi(){

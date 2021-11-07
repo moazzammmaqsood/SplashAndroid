@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.nouveau.splash.Api.modal.SplashUser;
 import com.nouveau.splash.utils.SessionManagement;
 import com.nouveau.splash.vendor.SigninActivity;
+import com.nouveau.splash.vendor.SummaryDashboard;
 import com.nouveau.splash.vendor.VenderDashboard;
 
 public class splash extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class splash extends AppCompatActivity {
                        i = new Intent(getBaseContext(), SigninActivity.class);
 
                     }else{
-                         i = new Intent(getBaseContext(), VenderDashboard.class);
+                         i = new Intent(getBaseContext(), SummaryDashboard.class);
 
                      }
 

@@ -83,7 +83,7 @@ public class SigninActivity extends AppCompatActivity {
                                 case 200:
                                     SplashUser user = new SplashUser(response.body());
                                     SessionManagement.getSessionManagement(activity).SetUser(user);
-                                    Intent i=new Intent(activity,VenderDashboard.class);
+                                    Intent i=new Intent(activity,SummaryDashboard.class);
                                     startActivity(i);
                                     finish();
                                     break;

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".vendor.SummaryDashboard"
+            android:exported="true" />
+        <activity
             android:name=".vendor.FinanceActivity"
             android:exported="true" />
         <activity
