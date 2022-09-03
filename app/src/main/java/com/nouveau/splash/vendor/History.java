@@ -104,7 +104,7 @@ public class History extends AppCompatActivity implements OnItemClick {
             public void onResponse(Call<List<Orders>> call, Response<List<Orders>> response) {
                 switch (response.code()){
                     case 200:
-                                     bottles=0;
+                        bottles=0;
                         payment=0;
                         balance =0;
                         List<Orders> finalList= new ArrayList<>();
@@ -117,6 +117,7 @@ public class History extends AppCompatActivity implements OnItemClick {
                             if(orders.getDate().getMonth()!=date.getMonth()){
                                     finalList.add(orders);
                                     bottles=bottles+orders.getBottlesdelivered();
+
                                     rate= orders.getRate();
                                     if(rate==null){
                                         rate=clientDetails.getRate();
@@ -127,8 +128,6 @@ public class History extends AppCompatActivity implements OnItemClick {
                         balance=balance-payment;
                         adapter = new ClientDeliveriesAdapter(finalList,activity,onItemClick);
                         recyclerView.setAdapter(adapter);
-
-
                         setData();
                         break;
                     default:

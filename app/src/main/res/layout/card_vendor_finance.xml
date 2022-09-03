@@ -23,14 +23,14 @@
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="2021-05-02"
+            android:text=""
             android:textSize="@dimen/delivery_card_text_size"
             android:layout_weight="1.5"
             android:layout_gravity="center"
             android:textColor="@color/colorBlack" />
 
         <TextView
-            android:id="@+id/bottlesdel"
+            android:id="@+id/remarks"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,18 +41,7 @@
             android:textColor="@color/colorBlack" />
 
         <TextView
-            android:id="@+id/bottlesrec"
-            android:textSize="@dimen/delivery_card_text_size"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:text="5"
-            android:textColor="@color/colorBlack" />
-
-        <TextView
-            android:id="@+id/paid"
+            android:id="@+id/amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

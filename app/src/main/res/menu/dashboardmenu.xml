@@ -15,6 +15,13 @@
     <item android:id="@+id/summaary"
         android:title="@string/summary"
         />
+    <item android:id="@+id/sms"
+        android:title="@string/sendsms"
+        />
+
+    <item android:id="@+id/finance"
+        android:title="@string/finance"
+        />
 
     <item android:id="@+id/logout"
         android:title="@string/logout" />

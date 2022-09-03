@@ -7,6 +7,8 @@ import com.nouveau.splash.Api.modal.vendor.ClientDetails;
 import com.nouveau.splash.Api.modal.vendor.ClientRequest;
 import com.nouveau.splash.Api.modal.vendor.ClientUpdateRequest;
 import com.nouveau.splash.Api.modal.vendor.EditClientRequest;
+import com.nouveau.splash.Api.modal.vendor.FinanceEntity;
+import com.nouveau.splash.Api.modal.vendor.FinanceRequest;
 import com.nouveau.splash.Api.modal.vendor.Orders;
 import com.nouveau.splash.Api.modal.vendor.SummaryDaily;
 import com.nouveau.splash.Api.modal.vendor.SummaryDelivery;
@@ -84,5 +86,24 @@ public interface VendorApi {
     @Headers("Content-Type:application/json")
     @GET("/api/v1/private/vendor/get_vendor_summary_monthly/{date}")
     Call<SummaryMonthly> v1FetchMonthlySummary(@Header ("Authorization")String token, @Path("date") String date);
+
+
+    @Headers("Content-Type:application/json")
+    @POST( "/api/v1/private/vendor/add_finance")
+    Call<SuccessResponse> v1AddFinance(@Header ("Authorization")String token,@Body FinanceRequest request) ;
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/get_finance/{date}")
+    Call<List<FinanceEntity>> v1GetFinance(@Header ("Authorization")String token, @Path("date") String date);
+
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/delete_finance/{financeid}")
+    Call<SuccessResponse> v1DeleteFinance(@Header ("Authorization")String token, @Path("financeid") int id);
+
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/vendor/sms")
+    Call<SuccessResponse> v1sms(@Header ("Authorization")String token);
 
 }

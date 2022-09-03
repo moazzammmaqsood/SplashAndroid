@@ -59,6 +59,7 @@ public class SummaryActivity extends AppCompatActivity implements SummaryDeliver
         }
         final String token = Utils.getToken(user.getToken());
 
+        selectdate.setText(Utils.getDatetoString(Calendar.getInstance().getTime()));
         datePicker= new DatePickerDialog.OnDateSetListener() {
 
             @Override

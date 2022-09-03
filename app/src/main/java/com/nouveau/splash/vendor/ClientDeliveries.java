@@ -166,7 +166,7 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                         Date date= Calendar.getInstance().getTime();
                         for (Orders order :
                                 orders ) {
-                            if(order.getDate().getMonth()==date.getMonth()){
+                            if(order.getDate().getMonth()==date.getMonth() && order.getDate().getYear()==date.getYear()){
                                 finalList.add(order);
                             }
                         }
@@ -265,7 +265,7 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                 })
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();

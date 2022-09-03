@@ -54,48 +54,90 @@
 
 
     </LinearLayout>
-
     <LinearLayout
+        android:id="@+id/datefetch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/divider_margin"
-        android:layout_margin="10dp"
-        android:id="@+id/detailll"
+        android:layout_margin="@dimen/divider_margin"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         >
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/selectdate"
+            android:id="@+id/month"
+            android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+            android:textSize="@dimen/labeltext"
             android:textStyle="bold"
-            android:text="Income: "/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/clientname"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Expense: "/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/clientbottle"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:drawablePadding="@dimen/margin_appname_tb"
+            android:textColor="@color/colorPrimary"
             />
 
+        <TextView
+            android:id="@+id/fetch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_sqr"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="Fetch"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expenseView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/divider_margin"
+        app:layout_constraintTop_toBottomOf="@+id/datefetch"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selectdate"
+            android:id="@+id/income"
+            android:drawableStart="@drawable/ic_baseline_arrow_drop_up_24"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_baseline_arrow_drop_down_24"
+            android:textAlignment="center"
+            android:text="Fetch"/>
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_baseline_money_24"
+            android:textAlignment="center"
+            android:text="Fetch"/>
+
+    </LinearLayout>
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/divider_margin"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/detailll"
+        app:layout_constraintTop_toBottomOf="@id/expenseView"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

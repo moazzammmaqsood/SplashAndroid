@@ -1,11 +1,13 @@
 package com.nouveau.splash.vendor;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -33,6 +35,8 @@ import com.nouveau.splash.utils.Utils;
 
 import org.json.JSONObject;
 
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -59,17 +63,24 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     Call<ClientDetails> call;
     private String TAG="ViewClient";
     AlertDialog alertDialog;
+    Boolean yesterday=false;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_client);
         context=this;
         callback=this;
+        OffsetTime offset = OffsetTime.now();
+        if(offset.getHour()<6){
+            yesterday=true;
+        }
+
         Intent intent=getIntent();
          clientid=  intent.getIntExtra("clientid",-1);
          userid= intent.getIntExtra("userid",-1);
-       vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
+         vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
         progressbar=findViewById(R.id.progressbar);
         if(clientid==-1 && userid==-1){
             Utils.Message("Failed to load user",this);
@@ -77,9 +88,6 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
 
         vendorImpl=new VendorImpl();
         initUi();
-
-
-
 
         final SplashUser user = SessionManagement.getSessionManagement(this).GetUser();
         if(user==null){
@@ -92,9 +100,6 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
             showEnable();
         }
         token=Utils.getToken(user.getToken());
-
-
-
 
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +158,12 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
                 date= dialogView.findViewById(R.id.deliverydate);
                 deliver= dialogView.findViewById(R.id.deliver);
                 cancle=dialogView.findViewById(R.id.cancel_button);
-                date.setText(Utils.getDatetoString(myCalendar.getTime()));
+                Calendar tempDate=Calendar.getInstance();
+
+                if(yesterday){
+                    tempDate.add(Calendar.DATE, -1);
+                }
+                date.setText(Utils.getDatetoString(tempDate.getTime()));
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -338,7 +348,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
 
         clientname.setText(body.getName());
         clientcontact.setText(body.getContact());
-        clientaddress.setText(body.getAddress());
+        clientaddress.setText   (body.getAddress());
         clientbottlesdel.setText(String.valueOf(body.getTotalbottles()));
         clientbottles.setText(String.valueOf(body.getBottlesholding()));
         clientbottlesrate.setText(String.valueOf(body.getRate()));

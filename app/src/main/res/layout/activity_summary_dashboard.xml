@@ -103,15 +103,22 @@
 
 
 
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/datefetch"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/datefetch"
         android:paddingLeft="@dimen/buttonpad"
         android:paddingRight="@dimen/buttonpad"
         android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingBottom="15dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <TextView
@@ -272,35 +279,19 @@
                     android:textAlignment="center"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/Comingsoon"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="@dimen/clientbutton"
-                android:layout_height="@dimen/clientbutton"
-                android:orientation="vertical"
-                android:id="@+id/okBtn"
-                android:visibility="gone"
-                android:background="@color/colorPrimaryLight"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="@dimen/clientbuttonImg"
-                    android:layout_height="@dimen/clientbuttonImg"
-                    android:layout_weight="2"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center"/>
+                    android:text="@string/MonthlyIncome"/>
 
                 <TextView
+                    android:id="@+id/monthlyIncome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:text="@string/enable"/>
+                    android:layout_gravity="center" />
+
 
             </LinearLayout>
+
 
             <View
                 android:layout_width="0dp"
@@ -311,9 +302,109 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/dbbuttonImg"
+                android:layout_height="@dimen/dbbuttonImg"
+                android:orientation="vertical"
+                android:id="@+id/monthlyExpenseLL"
+                android:background="@color/colorPrimary"
+                android:padding="10dp">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/labeltext"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/labeltext"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/MonthlyExpense"/>
+
+
+                <TextView
+                    android:id="@+id/monthlyExpense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/dbbuttonImg"
+                android:layout_height="@dimen/dbbuttonImg"
+                android:orientation="vertical"
+                android:id="@+id/monthlyTotalLL"
+                android:background="@color/colorPrimaryLight"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/labeltext"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/labeltext"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/MonthlyTotal"/>
+
+                <TextView
+                    android:id="@+id/monthlyTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
     </LinearLayout>
+    </ScrollView>
 
-
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/addBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:src="@drawable/ic_add_white_24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent"/>
 
 
 

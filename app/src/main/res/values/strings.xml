@@ -78,4 +78,8 @@
     <string name="activeClients">Active Clients</string>
     <string name="Comingsoon">Coming Soon</string>
     <string name="summarymonth">Summary for the month of :</string>
+    <string name="sendsms">Send Sms</string>
+    <string name="MonthlyIncome">Monthly Income</string>
+    <string name="MonthlyExpense">Monthly Expense</string>
+    <string name="MonthlyTotal">Monthly Total</string>
 </resources>
