@@ -120,7 +120,7 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                         Date date= Calendar.getInstance().getTime();
                         for (Orders order :
                                 orders ) {
-                            if(order.getDate().getMonth()==date.getMonth()){
+                            if(order.getDate().getMonth()==date.getMonth() && order.getDate().getYear()==date.getYear() ){
                                 finalList.add(order);
                             }
                         }
@@ -167,9 +167,11 @@ public class ClientDeliveries extends AppCompatActivity implements OnItemClick {
                         for (Orders order :
                                 orders ) {
                             if(order.getDate().getMonth()==date.getMonth() && order.getDate().getYear()==date.getYear()){
+                                Log.d("kktest date",order.getDate().getMonth() +"   "+order.getDate().getYear() +" today "+date.getMonth() +"   "+date.getYear() );
                                 finalList.add(order);
                             }
                         }
+                        Log.d("kktest date","chk");
 
                         adapter = new ClientDeliveriesAdapter(response.body(),activity,onItemClick);
                         recyclerView.setAdapter(adapter);

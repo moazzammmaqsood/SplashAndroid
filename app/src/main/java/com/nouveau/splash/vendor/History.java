@@ -114,7 +114,7 @@ public class History extends AppCompatActivity implements OnItemClick {
                                 response.body()) {
                             payment=payment+orders.getPayment();
 
-                            if(orders.getDate().getMonth()!=date.getMonth()){
+                            if((orders.getDate().getMonth()!=date.getMonth() && orders.getDate().getYear()==date.getYear()) ||  orders.getDate().getYear()!=date.getYear()){
                                     finalList.add(orders);
                                     bottles=bottles+orders.getBottlesdelivered();
 
