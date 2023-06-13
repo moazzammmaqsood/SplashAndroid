@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -47,15 +48,15 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     DatePickerDialog.OnDateSetListener datePicker;
     final Calendar myCalendar = Calendar.getInstance();
     LinearLayout deliverBtn,orderBtn,crossBtn,okBtn;
-    TextView clientname,clientcontact,clientaddress,clientbottlesdel,clientbottles,clientbottlesrate,clientlastdel,clientdaysdel,clientpaid,clientbalance;
+    TextView viewBill,clientname,clientcontact,clientaddress,clientbottlesdel,clientbottles,clientbottlesrate,clientlastdel,clientdaysdel,clientpaid,clientbalance;
     Context context;
     TextView date,nametag;
     int bottledel,bottlerec,bottlepay;
     String bottledate;
     VendorImpl vendorImpl;
-    String token;
+    String token,billUrl;
     int clientid,userid;
-    ProgressBar progressbar;
+    ProgressBar progressbar,pdfprogress;
     ViewClientCallback callback;
     ImageView editclient,back;
      VendorApi vendorApi;
@@ -64,6 +65,8 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     private String TAG="ViewClient";
     AlertDialog alertDialog;
     Boolean yesterday=false;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -82,6 +85,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
          userid= intent.getIntExtra("userid",-1);
          vendorApi= ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
         progressbar=findViewById(R.id.progressbar);
+        pdfprogress=findViewById(R.id.pdfprogress);
         if(clientid==-1 && userid==-1){
             Utils.Message("Failed to load user",this);
         }
@@ -266,7 +270,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     }
     private void closeDialogbox(){
         if (alertDialog!=null)
-        alertDialog.dismiss();
+           alertDialog.dismiss();
     }
 
     private void  initUi(){
@@ -286,6 +290,7 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
         orderBtn=findViewById(R.id.orderBtn);
         crossBtn=findViewById(R.id.crossBtn);
         okBtn= findViewById(R.id.okBtn);
+        viewBill=findViewById(R.id.monthlyBillView);
 
 
 
@@ -305,7 +310,24 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
             }
         });
 
+        viewBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPdf();
+            }
+        });
+
     }
+
+    private void openPdf() {
+        if(billUrl!=null){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(billUrl));
+            startActivity(browserIntent);
+        }
+    }
+
+
+
     private void FetchClient(){
         showProgress();
         call = vendorApi.v1getclientbyid(token,clientid,userid);
@@ -356,11 +378,27 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
         clientdaysdel.setText(String.valueOf(body.getDaysperdelivery()));
         clientpaid.setText(String.valueOf(body.getPaid()));
         clientbalance.setText(String.valueOf(body.getPaymentremaining()));
+        billUrl=body.getBillUrl();
+        if(billUrl!=null && !billUrl.isEmpty())
+        {
+           hidePdfProgrss();
+        }else{
+            showPdfProgrss();
+            vendorImpl.getMonthlyBill(this,token,clientid,userid,Utils.getLastMonth());
+        }
         if(nametag!=null){
             nametag.setText(body.getName());
 
         }
         clientnameDialog =body.getName();
+    }
+    void showPdfProgrss(){
+        progressbar.setVisibility(View.VISIBLE);
+        viewBill.setVisibility(View.GONE);
+    }
+    void hidePdfProgrss(){
+        progressbar.setVisibility(View.GONE);
+        viewBill.setVisibility(View.VISIBLE);
     }
     public void showProgress(){
         progressbar.setVisibility(View.VISIBLE);
@@ -397,8 +435,16 @@ public class ViewClient extends AppCompatActivity implements ViewClientCallback 
     @Override
     public void unsuccessful(int responsecode, String message) {
         hideProgress();
+        hidePdfProgrss();
         Utils.Message(message+" "+responsecode,this);
 
+    }
+
+    @Override
+    public void readyToViewPdf(String url) {
+
+        billUrl=url;
+        hidePdfProgrss();
     }
 
     @Override

@@ -42,21 +42,24 @@
         <activity android:name=".vendor.ViewPayment" />
         <activity android:name=".vendor.Payments" />
         <activity android:name=".vendor.AddClient" />
-        <activity android:name=".vendor.ViewClient">
+        <activity android:name=".vendor.ViewClient"
+            android:exported="true"
+            >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
         <activity android:name=".vendor.ClientActivity" />
         <activity android:name=".vendor.VenderDashboard" />
-        <activity android:name=".splash">
+        <activity
+            android:name=".splash"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

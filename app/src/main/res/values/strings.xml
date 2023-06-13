@@ -82,4 +82,5 @@
     <string name="MonthlyIncome">Monthly Income</string>
     <string name="MonthlyExpense">Monthly Expense</string>
     <string name="MonthlyTotal">Monthly Total</string>
+    <string name="lastmonth_bill">Last Month Bill:</string>
 </resources>

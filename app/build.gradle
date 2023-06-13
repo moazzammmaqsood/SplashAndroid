@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
 
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
 
     compileOptions {
@@ -15,9 +15,9 @@ android {
     defaultConfig {
         applicationId "com.nouveau.splash"
         minSdkVersion 22
-        targetSdkVersion 30
-        versionCode 3
-        versionName "1.0.3"
+        targetSdkVersion 31
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +49,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.4.1') 
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     apply plugin: 'com.android.application'

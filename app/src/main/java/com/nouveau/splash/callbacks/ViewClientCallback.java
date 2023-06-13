@@ -5,5 +5,7 @@ public interface ViewClientCallback {
     void succesfullyEnabledUser();
     void unsuccessful(int responsecode,String message);
 
+    void readyToViewPdf(String url);
+
 }
 

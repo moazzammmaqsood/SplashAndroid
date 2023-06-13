@@ -10,6 +10,7 @@ import com.nouveau.splash.Api.modal.vendor.EditClientRequest;
 import com.nouveau.splash.Api.modal.vendor.FinanceEntity;
 import com.nouveau.splash.Api.modal.vendor.FinanceRequest;
 import com.nouveau.splash.Api.modal.vendor.Orders;
+import com.nouveau.splash.Api.modal.vendor.PdfUrl;
 import com.nouveau.splash.Api.modal.vendor.SummaryDaily;
 import com.nouveau.splash.Api.modal.vendor.SummaryDelivery;
 import com.nouveau.splash.Api.modal.vendor.SummaryMonthly;
@@ -105,5 +106,9 @@ public interface VendorApi {
     @Headers("Content-Type:application/json")
     @GET("/api/v1/private/vendor/sms")
     Call<SuccessResponse> v1sms(@Header ("Authorization")String token);
+
+    @Headers("Content-Type:application/json")
+    @GET("/api/v1/private/pdf/generate_pdf/{clientid}/{userid}/{monthYear}")
+    Call<PdfUrl> getMonthlyBill(@Header ("Authorization")String token,@Path("clientid") int clientId,@Path("userid") int userId,@Path("monthYear") String monthYear);
 
 }

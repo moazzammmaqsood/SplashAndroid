@@ -223,29 +223,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/labelspacing"
-            android:layout_height="wrap_content"
-            android:id="@+id/lastdeliverylayout"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/clientlastdel_label"
-                android:layout_weight="1"
-                android:textSize="@dimen/clientlabeltext_size"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/clientlastdel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                  android:textSize="@dimen/clientlabeltext_size"/>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -318,6 +295,66 @@
                  android:textSize="@dimen/clientlabeltext_size"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/labelspacing"
+            android:layout_height="wrap_content"
+            android:id="@+id/lastdeliverylayout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/clientlastdel_label"
+                android:layout_weight="1"
+                android:textSize="@dimen/clientlabeltext_size"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/clientlastdel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="@dimen/clientlabeltext_size"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/labelspacing"
+            android:layout_height="wrap_content"
+            android:id="@+id/monthlybill"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lastmonth_bill"
+                android:layout_weight="1"
+                android:textSize="@dimen/clientlabeltext_size"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/monthlyBillView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="View Bill"
+                android:textSize="@dimen/clientlabeltext_size"/>
+
+
+            <ProgressBar
+                android:id="@+id/pdfprogress"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

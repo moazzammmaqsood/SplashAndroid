@@ -49,6 +49,9 @@ public class ClientDetails {
     @SerializedName("oncall")
     String oncall;
 
+    @SerializedName("billUrl")
+    String billUrl;
+
     public int getUserid() {
         return userid;
     }
@@ -167,5 +170,13 @@ public class ClientDetails {
 
     public void setOncall(String oncall) {
         this.oncall = oncall;
+    }
+
+    public String getBillUrl() {
+        return billUrl;
+    }
+
+    public void setBillUrl(String billUrl) {
+        this.billUrl = billUrl;
     }
 }

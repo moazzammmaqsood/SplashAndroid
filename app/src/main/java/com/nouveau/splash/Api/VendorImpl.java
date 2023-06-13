@@ -5,6 +5,7 @@ import android.util.Log;
 import com.nouveau.splash.Api.interfaces.VendorApi;
 import com.nouveau.splash.Api.modal.SuccessResponse;
 import com.nouveau.splash.Api.modal.vendor.ClientDetails;
+import com.nouveau.splash.Api.modal.vendor.PdfUrl;
 import com.nouveau.splash.Api.modal.vendor.SummaryDaily;
 import com.nouveau.splash.Api.modal.vendor.SummaryDelivery;
 import com.nouveau.splash.callbacks.ClientCallback;
@@ -211,4 +212,36 @@ public  class VendorImpl {
         });
     }
 
+
+    public void getMonthlyBill(final ViewClientCallback callback,String token,int clientId,int userId,String yearMonth){
+        VendorApi vendorApi = ApplicationInstance.getInstance().getRetrofitInstance().create(VendorApi.class);
+        Call<PdfUrl> clientcall = vendorApi.getMonthlyBill(token, clientId,userId,yearMonth);
+        clientcall.enqueue(new Callback<PdfUrl>() {
+            @Override
+            public void onResponse(Call<PdfUrl> call, Response<PdfUrl> response) {
+                switch (response.code()) {
+                    case 200:
+                        if(response.body()!=null)
+                        callback.readyToViewPdf(response.body().getUrl());
+                        else
+                            callback.unsuccessful(response.code(), "Unable to find pdf url");
+                        break;
+
+                    default:
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            callback.unsuccessful(response.code(), jObjError.getString("message"));
+                        } catch (Exception e) {
+                            Log.e(TAG, "onResponse:qq "+e.getMessage());
+                        }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PdfUrl> call, Throwable t) {
+                callback.unsuccessful(512, t.getMessage());
+            }
+
+        });
+    }
 }
